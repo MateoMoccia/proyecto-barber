@@ -20,10 +20,28 @@ export default function ClientForm() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async  (e) => {
     e.preventDefault()
-    console.log('Cita agendada:', formData)
-    setSubmitted(true)
+    
+try {
+  const response = await fetch ('' //UBICACION DEL BACKEND /URL
+,{
+method: 'POST',
+headers: {
+  'Content-Type': 'application/json'
+},
+body: JSON.stringify(formData)
+})
+
+if (!response.ok) {
+  throw new Error('Error en la respuesta del servidor')
+}
+
+const data = await response.json()
+console.log('Respuesta del servidor', data);
+
+if (data.success) {
+  setSubmitted(true)
     setTimeout(() => {
       setFormData({
         name: '',
@@ -34,8 +52,18 @@ export default function ClientForm() {
         time: ''
       })
       setSubmitted(false)
-    }, 3000)
+    }, 3000) //PARA FUTURO PONER BOTON PARA QUE EL USUARIO LO MANEJE
+} else {
+  throw new Error('Error al agendar la cita')
+}
+
+  } catch (error){
+    console.error('Error al enviar la cita:', error)
+    alert('Hubo un error al agendar tu cita. Por favor, intenta nuevamente más tarde.')
   }
+}
+
+  
 
   return (
     <section id="contact" className="py-24 bg-barber-950 relative overflow-hidden">
@@ -141,7 +169,7 @@ export default function ClientForm() {
                   Fecha Preferida
                 </label>
                 <input
-                  type="date"
+                  type="date" min={new Date().toISOString().split('T')[0]}
                   id="date"
                   name="date"
                   value={formData.date}
