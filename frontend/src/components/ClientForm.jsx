@@ -3,7 +3,6 @@ import { useState } from 'react'
 export default function ClientForm() {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     phone: '',
     service: '',
     date: '',
@@ -45,7 +44,6 @@ if (data.success) {
     setTimeout(() => {
       setFormData({
         name: '',
-        email: '',
         phone: '',
         service: '',
         date: '',
@@ -108,22 +106,6 @@ if (data.success) {
                 />
               </div>
 
-              {/* Email */}
-              <div className="animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-                <label htmlFor="email" className="block text-sm font-semibold text-gold-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="juan@email.com"
-                  required
-                  className="w-full px-4 py-3 bg-barber-800/50 border border-gold-400/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-500/20 transition-all duration-300"
-                />
-              </div>
 
               {/* Teléfono */}
               <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
